@@ -11,6 +11,7 @@ def main_menu():
     print("Select an option:")
     print("[c] Create a new map")
     print("[l] Load an existing map")
+    print("[v] Convert a map file to code to be used in Ardventure code.")
     print("[q] Quit")
 
     choice = input("Choice: ")
@@ -28,6 +29,27 @@ def main_menu():
             with open(path, 'r', encoding='utf-8') as f:
                 map_data = json.load(f)
             edit_map(map_data)
+        except FileNotFoundError:
+            print("File not found. Please try again.")
+            main_menu()
+        except json.decoder.JSONDecodeError:
+            print("Invalid JSON file format. Please try a different file.")
+            main_menu()
+    elif choice == "v":
+        print("Enter path to map file:")
+        path = input("Path: ")
+        # Check if path ends in .map, if not, add it
+        if not path.endswith(".map"):
+            path += ".map"
+        # Read in the map file into map_data
+        try:
+            with open(path, 'r', encoding='utf-8') as f:
+                map_data = json.load(f)
+            print("Converting map to code...")
+
+            # Convert map file to arduino code.
+
+            main_menu()
         except FileNotFoundError:
             print("File not found. Please try again.")
             main_menu()
