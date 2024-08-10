@@ -1,10 +1,11 @@
 import sys
 import os
 import json
+import time
 
 
 def main_menu():
-    print("======= Ardventure Editor =======")
+    print("============================== Ardventure Editor ===============================")
     print("Edit and create Ardventure maps.")
     print()
     print("Select an option:")
@@ -35,7 +36,7 @@ def main_menu():
 
 
 def create_map():
-    print("======= Create Map =======")
+    print("================================== Create Map ==================================")
     print("Specify metadata:")
     print("Enter a friendly name for the map, such as 'The Starting Zone'")
     name = input("Name: ")
@@ -59,9 +60,9 @@ def create_map():
     }
 
     for i in range(room_id_start, room_id_end + 1):
-        map_data["rooms"][i] = {
+        map_data["rooms"][str(i)] = {
             "title": "Room " + str(i),
-            "description": "This is room " + str(i),
+            "description": "Empty Room # " + str(i),
             "actions": {},
             "neighbors": {
                 "n": -1,
@@ -77,16 +78,16 @@ def create_map():
 
 def edit_map(map_data):
     current_room = str(map_data["starting_room"])
-    print("======= Map Editor =======")
+    print("=================================== Map Editor =================================")
     print("Map Name: " + map_data["name"])
     print("Map Description: " + map_data["description"])
     print("Path: " + map_data["path"])
     print()
 
     print(map_data["rooms"][current_room]["title"])
-    print("-----------------------------")
+    print("--------------------------------------------------------------------------------")
     print(map_data["rooms"][current_room]["description"])
-    print("-----------------------------")
+    print("--------------------------------------------------------------------------------")
     # Print out each of the available actions
     print("Actions:")
     if (len(map_data["rooms"][current_room]["actions"]) == 0):
@@ -151,10 +152,11 @@ def edit_map(map_data):
     elif choice == "s":
         with open(map_data["path"], 'w') as f:
             json.dump(map_data, f)
-        print("Map saved.")
+        print("Map saved")
+        time.sleep(2)
         edit_map(map_data)
     elif choice == "q":
-        print("Quitting.")
+        print("Returning to Main Menu")
         main_menu()
     else:
         print("Invalid choice. Please try again.")
