@@ -31,8 +31,10 @@ def main_menu():
             edit_map(map_data)
         except FileNotFoundError:
             print("File not found. Please try again.")
+            main_menu()
         except json.decoder.JSONDecodeError:
             print("Invalid JSON file format. Please try a different file.")
+            main_menu()
     elif choice == "q":
         print("Quitting.")
         sys.exit()
