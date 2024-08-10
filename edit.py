@@ -11,6 +11,7 @@ def main_menu():
     print("Select an option:")
     print("[c] Create a new map")
     print("[l] Load an existing map")
+    print("[v] Convert a map file to code to be used in Ardventure code.")
     print("[q] Quit")
 
     choice = input("Choice: ")
@@ -28,6 +29,31 @@ def main_menu():
             with open(path, 'r', encoding='utf-8') as f:
                 map_data = json.load(f)
             edit_map(map_data)
+        except FileNotFoundError:
+            print("File not found. Please try again.")
+            main_menu()
+        except json.decoder.JSONDecodeError:
+            print("Invalid JSON file format. Please try a different file.")
+            main_menu()
+    elif choice == "v":
+        print("Enter path to map file:")
+        path = input("Path: ")
+        # Check if path ends in .map, if not, add it
+        if not path.endswith(".map"):
+            path += ".map"
+        print("Enter path to save map code:")
+        output_path = input("Path: ")
+        if not output_path.endswith(".txt"):
+            output_path += ".txt"
+        # Read in the map file into map_data
+        try:
+            with open(path, 'r', encoding='utf-8') as f:
+                map_data = json.load(f)
+            print("Converting map to code...")
+
+            convert_map(map_data, output_path)
+
+            main_menu()
         except FileNotFoundError:
             print("File not found. Please try again.")
             main_menu()
@@ -174,6 +200,40 @@ def edit_map(map_data):
     else:
         print("Invalid choice. Please try again.")
         edit_map(map_data)
+
+
+def convert_map(map_data, path):
+    # Format to write to file: {room_id, "title", "description", "[action key] action description", {direction, action keys}, {neighbor ID, neighbor ID, neighbor ID, neighbor ID}},
+    # Example: {1, "The Grand Lobby", "This is a large round lobby, with a skylight in the center.", "[unlock] Attempt to unlock the vault door.\n[talk] Talk to the receptionist.", {e, talk, unlock}, {-1, -1, 0, 2}},
+    output = ""
+    for room_id, room_data in map_data["rooms"].items():
+        output += "{" + str(room_id) + ", \"" + \
+            room_data["title"] + "\", \"" + room_data["description"] + "\", "
+        if len(room_data["actions"]) > 0:
+            actions = ""
+            action_keys = ""
+            for action_key, action_description in room_data["actions"].items():
+                actions += "[" + action_key + "] " + action_description + "\\n"
+                action_keys += "\"" + action_key + "\", "
+            output += "\"" + actions.strip() + "\", "
+        else:
+            output += "\"\", "
+            action_keys = ""
+        directions = ""
+        for direction, neighbor_id in room_data["neighbors"].items():
+            if neighbor_id != -1:
+                directions += "\"" + direction + "\", "
+        output += "{" + action_keys + directions.strip(", ") + "}, "
+        neighbors = ""
+        for neighbor_id in room_data["neighbors"].values():
+            neighbors += str(neighbor_id) + ", "
+        output += "{" + neighbors.strip(", ") + "}},\n"
+
+    with open(path, "w", encoding='utf-8') as f:
+        # Strip the last comma and newline character
+        f.write(output.rstrip(",\n"))
+    print("Map code written to " + path)
+    time.sleep(2)
 
 
 def print_centered(text, pad="=", line_length=80):
