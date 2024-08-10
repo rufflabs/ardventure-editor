@@ -202,8 +202,6 @@ def edit_map(map_data):
 
 
 def convert_map(map_data, path):
-    # Format to write to file: {room_id, "title", "description", "[action key] action description", {direction, action keys}, {neighbor ID, neighbor ID, neighbor ID, neighbor ID}},
-    # Example: {1, "The Grand Lobby", "This is a large round lobby, with a skylight in the center.", "[unlock] Attempt to unlock the vault door.\n[talk] Talk to the receptionist.", {e, talk, unlock}, {-1, -1, 0, 2}},
     output = ""
     for room_id, room_data in map_data["rooms"].items():
         output += "{" + str(room_id) + ", \"" + \
