@@ -1,1 +1,52 @@
-{"name": "The Starting Zone", "description": "This is the starting area of the game.", "path": "starting-zone.map", "starting_room": "1", "current_room": "2", "room_id_start": 0, "room_id_end": 2, "rooms": {"0": {"title": "The Vault", "description": "A glittering golden vault full of jewels and gold! There is also a robot standing in the corner.\\n\\nThere is some kind of penant here...", "actions": {"flag": "Inspect the penant.", "talk": "Greet the robot."}, "neighbors": {"n": -1, "e": 1, "w": -1, "s": -1}}, "1": {"title": "The Grand Lobby", "description": "This is a large round lobby, with a skylight in the center.", "actions": {"unlock": "Attempt to unlock the vault door."}, "neighbors": {"n": -1, "e": -1, "w": 0, "s": 2}}, "2": {"title": "The Great Outdoors", "description": "You enter a beautiful clearing, with the sun shining down in rays on the calm and peaceful grasses.\\nYou are surrounded by many trees, and a doorway is to the north in the side of a mountain.\\n\\nThere is a person standing here with a name tag that says 'Hi, I'm Bob.'", "actions": {"key": "There's a battered red keycard on the ground.", "talk": "Talk to Bob"}, "neighbors": {"n": 1, "e": -1, "w": -1, "s": -1}}}}
+{
+  "name": "The Starting Zone",
+  "description": "This is the starting area of the game.",
+  "path": "starting-zone.map",
+  "starting_room": "1",
+  "current_room": "2",
+  "room_id_start": 0,
+  "room_id_end": 2,
+  "rooms": {
+    "0": {
+      "title": "The Vault",
+      "description": "A glittering golden vault full of jewels and gold! There is also a robot standing in the corner.\\n\\nThere is some kind of penant here...",
+      "actions": {
+        "flag": "Inspect the penant.",
+        "talk": "Greet the robot."
+      },
+      "neighbors": {
+        "n": -1,
+        "e": 1,
+        "w": -1,
+        "s": -1
+      }
+    },
+    "1": {
+      "title": "The Grand Lobby",
+      "description": "This is a large round lobby, with a skylight in the center.",
+      "actions": {
+        "unlock": "Attempt to unlock the vault door."
+      },
+      "neighbors": {
+        "n": -1,
+        "e": -1,
+        "w": 0,
+        "s": 2
+      }
+    },
+    "2": {
+      "title": "The Great Outdoors",
+      "description": "You enter a beautiful clearing, with the sun shining down in rays on the calm and peaceful grasses.\\nYou are surrounded by many trees, and a doorway is to the north in the side of a mountain.\\n\\nThere is a person standing here with a name tag that says 'Hi, I'm Bob.'",
+      "actions": {
+        "key": "There's a battered red keycard on the ground.",
+        "talk": "Talk to Bob"
+      },
+      "neighbors": {
+        "n": 1,
+        "e": -1,
+        "w": -1,
+        "s": -1
+      }
+    }
+  }
+}
