@@ -27,7 +27,6 @@ def main_menu():
         try:
             with open(path, 'r', encoding='utf-8') as f:
                 map_data = json.load(f)
-            current_room = map_data["starting_room"]
             edit_map(map_data)
         except FileNotFoundError:
             print("File not found. Please try again.")
@@ -56,12 +55,16 @@ def create_map():
     room_id_end = int(input("Ending ID: "))
     print("Enter path to save map:")
     path = input("Path: ")
+    # Check if path ends in .map, if not, add it
+    if not path.endswith(".map"):
+        path += ".map"
 
     map_data = {
         "name": name,
         "description": description,
         "path": path,
         "starting_room": starting_room,
+        "current_room": starting_room,
         "room_id_start": room_id_start,
         "room_id_end": room_id_end,
         "rooms": {}
@@ -85,7 +88,9 @@ def create_map():
 
 
 def edit_map(map_data):
-    current_room = str(map_data["starting_room"])
+    current_room = map_data["current_room"]
+    if current_room not in map_data["rooms"]:
+        current_room = str(map_data["starting_room"])
     print("=================================== Map Editor =================================")
     print("Map Name: " + map_data["name"])
     print("Map Description: " + map_data["description"])
@@ -155,10 +160,10 @@ def edit_map(map_data):
     elif choice == "g":  # TODO: Validate the room ID is in the map.
         print("Enter room ID to go to:")
         room_id = input("Room ID: ")
-        current_room = room_id
+        map_data["current_room"] = room_id
         edit_map(map_data)
     elif choice == "s":
-        with open(map_data["path"], 'w') as f:
+        with open(map_data["path"], 'w', encoding='utf-8') as f:
             json.dump(map_data, f)
         print("Map saved")
         time.sleep(2)
