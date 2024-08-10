@@ -20,13 +20,19 @@ def main_menu():
     elif choice == "l":
         print("Enter path to map file:")
         path = input("Path: ")
+        # Check if path ends in .map, if not, add it
+        if not path.endswith(".map"):
+            path += ".map"
         # Read in the map file into map_data
-        with open(path, 'r') as f:
-            map_data = json.load(f)
-        current_room = map_data["starting_room"]
-        edit_map(map_data)
-        # TODO: Add error handling for path.
-        # TODO: Add option to view/load recent map files.
+        try:
+            with open(path, 'r', encoding='utf-8') as f:
+                map_data = json.load(f)
+            current_room = map_data["starting_room"]
+            edit_map(map_data)
+        except FileNotFoundError:
+            print("File not found. Please try again.")
+        except json.decoder.JSONDecodeError:
+            print("Invalid JSON file format. Please try a different file.")
     elif choice == "q":
         print("Quitting.")
         sys.exit()
