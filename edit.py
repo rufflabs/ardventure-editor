@@ -5,7 +5,7 @@ import time
 
 
 def main_menu():
-    print("============================== Ardventure Editor ===============================")
+    print_centered("Ardventure Editor")
     print("Edit and create Ardventure maps.")
     print()
     print("Select an option:")
@@ -43,7 +43,7 @@ def main_menu():
 
 
 def create_map():
-    print("================================== Create Map ==================================")
+    print_centered("Create Map")
     print("Specify metadata:")
     print("Enter a friendly name for the map, such as 'The Starting Zone'")
     name = input("Name: ")
@@ -91,16 +91,16 @@ def edit_map(map_data):
     current_room = map_data["current_room"]
     if current_room not in map_data["rooms"]:
         current_room = str(map_data["starting_room"])
-    print("=================================== Map Editor =================================")
+    print_centered("Map Editor")
     print("Map Name: " + map_data["name"])
     print("Map Description: " + map_data["description"])
     print("Path: " + map_data["path"])
     print()
 
     print(map_data["rooms"][current_room]["title"])
-    print("--------------------------------------------------------------------------------")
+    print("-" * 80)
     print(map_data["rooms"][current_room]["description"])
-    print("--------------------------------------------------------------------------------")
+    print("-" * 80)
     # Print out each of the available actions
     print("Actions:")
     if (len(map_data["rooms"][current_room]["actions"]) == 0):
@@ -174,6 +174,15 @@ def edit_map(map_data):
     else:
         print("Invalid choice. Please try again.")
         edit_map(map_data)
+
+
+def print_centered(text, pad="=", line_length=80):
+    padding_length = (line_length - len(text)) // 2
+    padding = pad * padding_length
+    centered_text = f"{padding} {text} {padding}"
+    if len(centered_text) < line_length:
+        centered_text += pad
+    print(centered_text)
 
 
 if __name__ == "__main__":
