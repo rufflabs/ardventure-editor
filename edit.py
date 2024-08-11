@@ -146,7 +146,8 @@ def edit_map(map_data):
     print("[d] Edit description")
     print("[a] Add action")
     print("[r] Remove action")
-    print("[n] Edit neighbor")
+    print("[n] Edit/Add neighbor")
+    print("[e] Delete neighbor")
     print("[g] Go to room")
     print("[s] Save Map")
     print("[q] Quit")
@@ -181,6 +182,22 @@ def edit_map(map_data):
         print("Enter room ID to connect to:")
         room_id = int(input("Room ID: "))
         map_data["rooms"][current_room]["neighbors"][direction] = room_id
+        # Add the reverse direction to the neighbor room
+        if direction == "n":
+            reverse_direction = "s"
+        elif direction == "s":
+            reverse_direction = "n"
+        elif direction == "e":
+            reverse_direction = "w"
+        elif direction == "w":
+            reverse_direction = "e"
+        map_data["rooms"][str(room_id)]["neighbors"][reverse_direction] = int(
+            current_room)
+        edit_map(map_data)
+    elif choice == "e":
+        print("Enter direction to delete:")
+        direction = input("Direction: ")
+        map_data["rooms"][current_room]["neighbors"][direction] = -1
         edit_map(map_data)
     elif choice == "g":  # TODO: Validate the room ID is in the map.
         print("Enter room ID to go to:")
