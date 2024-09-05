@@ -166,7 +166,7 @@ def edit_map(map_data):
         edit_map(map_data)
     elif choice == "a":
         print("Enter action key:")
-        key = input("Key: ")
+        key = input("Key: ").strip().lower()
         print("Enter action description:")
         description = input("Description: ")
         map_data["rooms"][current_room]["actions"][key] = description
@@ -178,7 +178,7 @@ def edit_map(map_data):
         edit_map(map_data)
     elif choice == "n":
         print("Enter direction to edit:")
-        direction = input("Direction: ")
+        direction = input("Direction: ").strip().lower()
         print("Enter room ID to connect to:")
         room_id = int(input("Room ID: "))
         map_data["rooms"][current_room]["neighbors"][direction] = room_id
@@ -227,7 +227,7 @@ def convert_map(map_data, path):
             actions = ""
             action_keys = ""
             for action_key, action_description in room_data["actions"].items():
-                actions += "[" + action_key + "] " + action_description + "\\n"
+                actions += "[" + action_key + "] " + action_description + "\\r\\n"
                 action_keys += "\"" + action_key + "\", "
             output += "\"" + actions.strip() + "\", "
         else:
