@@ -9,9 +9,9 @@
   "rooms": {
     "0": {
       "title": "The Vault",
-      "description": "A glittering golden vault full of jewels and gold! There is also a robot standing in the corner.\\n\\nThere is some kind of penant here...",
+      "description": "A glittering golden vault full of jewels and gold! There is also a robot standing in the corner.\\n\\nThere is some kind of pennant here...",
       "actions": {
-        "flag": "Inspect the penant.",
+        "flag": "Inspect the pennant.",
         "talk": "Greet the robot."
       },
       "neighbors": {
